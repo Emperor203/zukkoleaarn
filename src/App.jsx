@@ -126,6 +126,50 @@ export default function App() {
   const [geomAnswer, setGeomAnswer] = useState(null);
   const [geomFeedback, setGeomFeedback] = useState(null);
 
+  // === ИИ-Учитель (AI Tutor) ===
+  const [aiInput, setAiInput] = useState('');
+  const [aiTyping, setAiTyping] = useState(false);
+  const [aiMessages, setAiMessages] = useState([
+    {
+      sender: 'ai',
+      text: 'Привет, Сардор! Я твой персональный ИИ-Учитель ZukkoLearn 🤖. Чем помочь сегодня? Задай любой вопрос по математике (дроби, уравнения, геометрия) или английскому языку!'
+    }
+  ]);
+
+  const handleAskAI = (userQuery = aiInput) => {
+    if (!userQuery.trim()) return;
+    playTone('pop');
+    
+    const query = userQuery.trim();
+    const newMsgs = [...aiMessages, { sender: 'user', text: query }];
+    setAiMessages(newMsgs);
+    setAiInput('');
+    setAiTyping(true);
+
+    setTimeout(() => {
+      let reply = 'Отличный вопрос! Давай разберем это поэтапно и наглядно.';
+      const q = query.toLowerCase();
+
+      if (q.includes('дроб') || q.includes('3/4') || q.includes('пицц')) {
+        reply = '🍕 Дроби — это очень просто! Представь пиццу, разрезанную на 4 равных куска. Число снизу (4) — знаменатель, показывает на сколько частей разделили. Число сверху (3) — числитель, сколько кусочков мы взяли. Получается 3/4 целой пиццы!';
+      } else if (q.includes('уравнен') || q.includes('вес') || q.includes('x')) {
+        reply = '⚖️ Уравнение как чашечные весы! В задаче [ X ] + 3 = 8 мы убираем по 3 кг с обеих сторон весов. Остается X = 8 - 3 = 5 кг. Весы в идеальном равновесии!';
+      } else if (q.includes('площад') || q.includes('геометр')) {
+        reply = '📐 Площадь прямоугольника вычисляется по формуле: S = a × b (длина умножить на ширину). Если стороны 4 м и 6 м, то 4 × 6 = 24 м² (ровно 24 клеточки внутри фигуры)!';
+      } else if (q.includes('пифагор') || q.includes('треуголь')) {
+        reply = '📐 Теорема Пифагора гласит: a² + b² = c²! В прямоугольном треугольнике квадрат гипотенузы равен сумме квадратов катетов. Например, египетский треугольник: 3² + 4² = 9 + 16 = 25 (а √25 = 5)!';
+      } else if (q.includes('apple') || q.includes('английск') || q.includes('english')) {
+        reply = '🇬🇧 Чтобы улучшить произношение в Speaking Lab, говори на выдохе и четко произноси согласные звуки. Попробуй слово "Red Apple" [ rɛd ˈæp.əl ] — сделай ударение на первый слог!';
+      } else {
+        reply = `💡 Для ${selectedGrade} класса это важная тема! Главный секрет успеха в ZukkoLearn — визуализировать каждое правило и не бояться ошибок. Хочешь потренироваться на интерактивном уроке?`;
+      }
+
+      setAiMessages([...newMsgs, { sender: 'ai', text: reply }]);
+      setAiTyping(false);
+      playTone('success');
+    }, 700);
+  };
+
   // === Интерактив Английский (Speaking Lab) ===
   const englishLessons = [
     {
@@ -438,6 +482,19 @@ export default function App() {
             >
               <span>📚</span> 
               <span>Каталог 5–9</span>
+            </button>
+
+            {/* Кнопка ИИ-Учитель (AI Tutor) */}
+            <button
+              onClick={() => { playTone('pop'); setActiveTab('ai-tutor'); }}
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl font-black text-xs sm:text-sm transition-all ${
+                activeTab === 'ai-tutor'
+                  ? 'bg-[#FFB21F] text-[#1E2C8A] shadow-md'
+                  : 'text-slate-600 hover:text-[#1E2C8A]'
+              }`}
+            >
+              <span>🤖</span> 
+              <span>ИИ-Учитель</span>
             </button>
           </nav>
 
@@ -1800,6 +1857,127 @@ export default function App() {
                   </ul>
                 </div>
               </div>
+            </div>
+
+          </div>
+        )}
+
+        {/* ========================================================
+            6. ИИ-УЧИТЕЛЬ (AI TUTOR & ASSISTANT)
+        ======================================================== */}
+        {activeTab === 'ai-tutor' && (
+          <div className="space-y-6 animate-fadeIn">
+            
+            {/* Шапка ИИ-Учителя */}
+            <div className="bg-white rounded-3xl border-2 border-slate-200 p-6 sm:p-8 shadow-[0_8px_0_rgba(30,44,138,0.12)]">
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 rounded-3xl bg-[#FFB21F] text-[#1E2C8A] text-3xl font-black flex items-center justify-center shadow-md">
+                    🤖
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h2 className="text-2xl font-black text-[#1E2C8A]">
+                        Персональный ИИ-Учитель
+                      </h2>
+                      <span className="text-xs font-black bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full border border-emerald-300">
+                        Онлайн 24/7
+                      </span>
+                    </div>
+                    <p className="text-slate-600 font-semibold text-xs sm:text-sm mt-0.5">
+                      Объяснит любую сложную тему, формулу или правило простыми словами без критики и стресса.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-black text-slate-400">Твой класс:</span>
+                  <span className="text-xs font-black text-[#FFB21F] bg-[#1E2C8A] px-3 py-1 rounded-xl">
+                    {selectedGrade} класс
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Окно диалога с ИИ-Учителем */}
+            <div className="bg-white rounded-3xl border-2 border-slate-200 p-6 shadow-card-solid flex flex-col h-[460px]">
+              
+              {/* Список сообщений */}
+              <div className="flex-1 overflow-y-auto space-y-4 pr-2">
+                {aiMessages.map((msg, idx) => (
+                  <div
+                    key={idx}
+                    className={`flex items-start gap-3 ${
+                      msg.sender === 'user' ? 'flex-row-reverse' : 'flex-row'
+                    }`}
+                  >
+                    <div className={`w-9 h-9 rounded-2xl flex items-center justify-center font-black text-sm shrink-0 ${
+                      msg.sender === 'user'
+                        ? 'bg-[#1E2C8A] text-white shadow-sm'
+                        : 'bg-[#FFB21F] text-[#1E2C8A] shadow-sm'
+                    }`}>
+                      {msg.sender === 'user' ? '👦' : '🤖'}
+                    </div>
+
+                    <div className={`max-w-md p-4 rounded-3xl font-semibold text-sm leading-relaxed ${
+                      msg.sender === 'user'
+                        ? 'bg-[#1E2C8A] text-white rounded-tr-none'
+                        : 'bg-slate-100 text-slate-800 border border-slate-200 rounded-tl-none'
+                    }`}>
+                      {msg.text}
+                    </div>
+                  </div>
+                ))}
+
+                {aiTyping && (
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-2xl bg-[#FFB21F] text-[#1E2C8A] flex items-center justify-center font-black text-sm">
+                      🤖
+                    </div>
+                    <div className="p-3 bg-slate-100 rounded-2xl rounded-tl-none text-xs font-bold text-slate-500 animate-pulse">
+                      ИИ-Учитель думает и формулирует подсказку...
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Быстрые вопросы-подсказки */}
+              <div className="pt-3 pb-2 flex flex-wrap gap-2 border-t border-slate-100">
+                {[
+                  '🍕 Как понять дроби 3/4?',
+                  '⚖️ Как решать уравнения на весах?',
+                  '📐 Формула площади прямоугольника',
+                  '🇬🇧 Как говорить "Red Apple" без акцента?'
+                ].map((chip, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => handleAskAI(chip)}
+                    className="text-[11px] font-black bg-slate-100 hover:bg-slate-200 text-[#1E2C8A] px-3 py-1 rounded-xl transition"
+                  >
+                    {chip}
+                  </button>
+                ))}
+              </div>
+
+              {/* Поле ввода сообщения */}
+              <div className="pt-2 flex items-center gap-2">
+                <input
+                  type="text"
+                  value={aiInput}
+                  onChange={(e) => setAiInput(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleAskAI()}
+                  placeholder="Задай вопрос учителю: например, «Как решить уравнение x + 3 = 8?»"
+                  className="flex-1 px-4 py-3 rounded-2xl border-2 border-slate-200 font-bold text-sm text-[#1E2C8A] focus:outline-none focus:border-[#1E2C8A]"
+                />
+                <button
+                  onClick={() => handleAskAI()}
+                  className="btn-3d btn-3d-yellow px-6 py-3 rounded-2xl font-black text-sm flex items-center gap-2"
+                >
+                  <span>Спросить</span>
+                  <i className="fa-solid fa-paper-plane text-xs"></i>
+                </button>
+              </div>
+
             </div>
 
           </div>
