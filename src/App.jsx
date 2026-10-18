@@ -126,6 +126,14 @@ export default function App() {
   const [geomAnswer, setGeomAnswer] = useState(null);
   const [geomFeedback, setGeomFeedback] = useState(null);
 
+  // === Интерактив Урок 4: Сложный тест (8 класс) — Теорема Пифагора 3² + 4² = c² ===
+  const [pythAnswer, setPythAnswer] = useState(null);
+  const [pythFeedback, setPythFeedback] = useState(null);
+
+  // === Интерактив Урок 5: Сложный экзамен (9 класс) — Квадратные уравнения x² - 5x + 6 = 0 ===
+  const [quadAnswer, setQuadAnswer] = useState(null);
+  const [quadFeedback, setQuadFeedback] = useState(null);
+
   // === ИИ-Учитель (AI Tutor) ===
   const [aiInput, setAiInput] = useState('');
   const [aiTyping, setAiTyping] = useState(false);
@@ -241,6 +249,16 @@ export default function App() {
               setGeomAnswer(24);
               setGeomFeedback('correct');
               setCoins(prev => prev + 20);
+              triggerConfetti();
+            } else if (mathLessonIndex === 3) {
+              setPythAnswer(5);
+              setPythFeedback('correct');
+              setCoins(prev => prev + 25);
+              triggerConfetti();
+            } else if (mathLessonIndex === 4) {
+              setQuadAnswer('2 и 3');
+              setQuadFeedback('correct');
+              setCoins(prev => prev + 30);
               triggerConfetti();
             }
           } else if (subject === 'english') {
@@ -836,8 +854,48 @@ export default function App() {
                       </div>
                     </div>
 
-                    {/* Уровень 4: Книга / Английский Спикинг (#1CB0F6) */}
-                    <div className="w-full flex justify-start pl-32 z-10">
+                    {/* Уровень 4: Теорема Пифагора (#7E22CE) */}
+                    <div className="w-full flex justify-start pl-28 z-10">
+                      <div 
+                        onClick={() => { playTone('pop'); setMathLessonIndex(3); }}
+                        className={`relative group cursor-pointer flex flex-col items-center ${
+                          mathLessonIndex === 3 ? 'scale-110' : ''
+                        }`}
+                      >
+                        {mathLessonIndex === 3 && (
+                          <span className="absolute -top-7 bg-[#FFB21F] text-[#1E2C8A] font-black text-[10px] px-2.5 py-0.5 rounded-full shadow-md animate-bounce">
+                            СЕЙЧАС ТУТ
+                          </span>
+                        )}
+                        <button className="w-16 h-16 rounded-full bg-purple-600 border-4 border-purple-800 shadow-[0_6px_0_#581C87] flex items-center justify-center text-white text-2xl font-black transform active:translate-y-1 transition">
+                          📐
+                        </button>
+                        <span className="text-xs font-black text-[#1E2C8A] mt-1">4. Пифагор (8 кл)</span>
+                      </div>
+                    </div>
+
+                    {/* Уровень 5: Экзамен ОГЭ (Квадратные уравнения #E11D48) */}
+                    <div className="w-full flex justify-center z-10">
+                      <div 
+                        onClick={() => { playTone('pop'); setMathLessonIndex(4); }}
+                        className={`relative group cursor-pointer flex flex-col items-center ${
+                          mathLessonIndex === 4 ? 'scale-110' : ''
+                        }`}
+                      >
+                        {mathLessonIndex === 4 && (
+                          <span className="absolute -top-7 bg-[#FFB21F] text-[#1E2C8A] font-black text-[10px] px-2.5 py-0.5 rounded-full shadow-md animate-bounce">
+                            СЕЙЧАС ТУТ
+                          </span>
+                        )}
+                        <button className="w-16 h-16 rounded-full bg-rose-600 border-4 border-rose-800 shadow-[0_6px_0_#9F1239] flex items-center justify-center text-white text-2xl font-black transform active:translate-y-1 transition">
+                          🔥
+                        </button>
+                        <span className="text-xs font-black text-[#1E2C8A] mt-1">5. Экзамен (9 кл)</span>
+                      </div>
+                    </div>
+
+                    {/* Уровень 6: English Speaking Lab (#1CB0F6) */}
+                    <div className="w-full flex justify-end pr-16 z-10">
                       <div 
                         onClick={() => { playTone('pop'); setSubject('english'); }}
                         className="group cursor-pointer flex flex-col items-center"
@@ -845,7 +903,7 @@ export default function App() {
                         <button className="w-16 h-16 rounded-full bg-[#1CB0F6] border-4 border-[#1899D6] shadow-[0_6px_0_#1277A8] flex items-center justify-center text-white text-2xl font-black transform active:translate-y-1 transition">
                           <i className="fa-solid fa-headphones"></i>
                         </button>
-                        <span className="text-xs font-black text-[#1E2C8A] mt-1">4. Speaking Lab</span>
+                        <span className="text-xs font-black text-[#1E2C8A] mt-1">6. Speaking Lab</span>
                       </div>
                     </div>
 
@@ -1165,6 +1223,163 @@ export default function App() {
                         <div className="p-4 rounded-2xl bg-rose-50 border-2 border-rose-300 text-rose-700 font-bold flex items-center justify-center gap-3">
                           <span className="text-2xl">🤔</span>
                           <span>Не совсем. Формула площади прямоугольника: S = длина × ширина. Попробуй умножить 4 на 6!</span>
+                        </div>
+                      )}
+
+                    </div>
+                  </div>
+                )}
+
+                {/* УРОК 4: СЛОЖНЫЙ ТЕСТ (8 КЛАСС) — ТЕОРЕМА ПИФАГОРА */}
+                {mathLessonIndex === 3 && (
+                  <div className="bg-white rounded-3xl border-2 border-slate-200 p-6 sm:p-8 shadow-[0_8px_0_rgba(30,44,138,0.12)]">
+                    <div className="max-w-2xl mx-auto text-center space-y-6">
+                      
+                      <div className="inline-block bg-purple-50 border-2 border-purple-200 px-6 py-3 rounded-2xl">
+                        <span className="text-xs font-black text-purple-700 uppercase tracking-wider block mb-1">
+                          ⚡ Сложный тест • 8 класс
+                        </span>
+                        <p className="text-base sm:text-lg font-bold text-slate-800">
+                          Найди гипотенузу <span className="font-black text-purple-800 text-xl font-mono">c</span> прямоугольного треугольника с катетами <span className="font-black text-purple-800">a = 3</span> и <span className="font-black text-purple-800">b = 4</span>:
+                        </p>
+                        <div className="font-mono font-black text-sm text-purple-900 mt-1">
+                          Формула: a² + b² = c² (3² + 4² = c²)
+                        </div>
+                      </div>
+
+                      {/* Интерактивный SVG прямоугольный треугольник */}
+                      <div className="p-6 bg-slate-50 rounded-3xl border-2 border-slate-200 flex flex-col items-center justify-center">
+                        <svg viewBox="0 0 260 180" className="w-64 h-44 drop-shadow-md select-none">
+                          <polygon points="50,140 190,140 50,30" fill="#E9D5FF" stroke="#7E22CE" strokeWidth="4" strokeLinejoin="round" />
+                          <rect x="50" y="122" width="18" height="18" fill="none" stroke="#7E22CE" strokeWidth="2" />
+                          
+                          {/* Катет a = 3 */}
+                          <text x="25" y="90" fill="#6B21A8" fontSize="14" fontWeight="900">a = 3</text>
+                          {/* Катет b = 4 */}
+                          <text x="110" y="160" fill="#6B21A8" fontSize="14" fontWeight="900">b = 4</text>
+                          {/* Гипотенуза c = ? */}
+                          <text x="135" y="80" fill="#7E22CE" fontSize="16" fontWeight="900">c = ?</text>
+                        </svg>
+                      </div>
+
+                      {/* Варианты ответов */}
+                      <div>
+                        <div className="text-xs font-black uppercase text-slate-400 mb-2">
+                          Выбери значение гипотенузы c (√25):
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-md mx-auto">
+                          {[5, 6, 7, 25].map((val) => (
+                            <button
+                              key={val}
+                              onClick={() => {
+                                playTone('pop');
+                                setPythAnswer(val);
+                                if (val === 5) {
+                                  setPythFeedback('correct');
+                                  setCoins(prev => prev + 25);
+                                  triggerConfetti();
+                                } else {
+                                  setPythFeedback('wrong');
+                                  playTone('error');
+                                }
+                              }}
+                              className={`btn-3d py-3 rounded-2xl font-black text-lg ${
+                                pythAnswer === val
+                                  ? val === 5 ? 'btn-3d-green' : 'bg-rose-500 text-white'
+                                  : 'btn-3d-white'
+                              }`}
+                            >
+                              c = {val}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Фидбек */}
+                      {pythFeedback === 'correct' && (
+                        <div className="p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-400 text-emerald-800 font-extrabold flex items-center justify-center gap-3">
+                          <span className="text-2xl">🎉</span>
+                          <span>Идеально! 3² + 4² = 9 + 16 = 25. Корень из 25 равен 5! +25 💎 начислено!</span>
+                        </div>
+                      )}
+
+                      {pythFeedback === 'wrong' && (
+                        <div className="p-4 rounded-2xl bg-rose-50 border-2 border-rose-300 text-rose-700 font-bold flex items-center justify-center gap-3">
+                          <span className="text-2xl">🤔</span>
+                          <span>Почти! 3² = 9, 4² = 16. Складываем: 9 + 16 = 25. Теперь извлеки квадратный корень из 25!</span>
+                        </div>
+                      )}
+
+                    </div>
+                  </div>
+                )}
+
+                {/* УРОК 5: СЛОЖНЫЙ ЭКЗАМЕН (9 КЛАСС) — КВАДРАТНЫЕ УРАВНЕНИЯ */}
+                {mathLessonIndex === 4 && (
+                  <div className="bg-white rounded-3xl border-2 border-slate-200 p-6 sm:p-8 shadow-[0_8px_0_rgba(30,44,138,0.12)]">
+                    <div className="max-w-2xl mx-auto text-center space-y-6">
+                      
+                      <div className="inline-block bg-rose-50 border-2 border-rose-200 px-6 py-3 rounded-2xl">
+                        <span className="text-xs font-black text-rose-700 uppercase tracking-wider block mb-1">
+                          🔥 Экзаменационный уровень ОГЭ • 9 класс
+                        </span>
+                        <p className="text-base sm:text-lg font-bold text-slate-800">
+                          Реши квадратное уравнение через теорему Виета или Дискриминант:
+                        </p>
+                        <div className="font-mono font-black text-2xl text-rose-950 mt-1">
+                          x² - 5x + 6 = 0
+                        </div>
+                      </div>
+
+                      <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-xs font-semibold text-slate-600 max-w-md mx-auto">
+                        💡 <i>Подсказка:</i> Произведение корней x₁ · x₂ = 6, а сумма x₁ + x₂ = 5. Какие это два числа?
+                      </div>
+
+                      {/* Варианты ответов */}
+                      <div>
+                        <div className="text-xs font-black uppercase text-slate-400 mb-2">
+                          Выбери пару корней (x₁, x₂):
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-lg mx-auto">
+                          {['1 и 6', '2 и 3', '-2 и -3'].map((ans) => (
+                            <button
+                              key={ans}
+                              onClick={() => {
+                                playTone('pop');
+                                setQuadAnswer(ans);
+                                if (ans === '2 и 3') {
+                                  setQuadFeedback('correct');
+                                  setCoins(prev => prev + 30);
+                                  triggerConfetti();
+                                } else {
+                                  setQuadFeedback('wrong');
+                                  playTone('error');
+                                }
+                              }}
+                              className={`btn-3d py-3 rounded-2xl font-black text-base ${
+                                quadAnswer === ans
+                                  ? ans === '2 и 3' ? 'btn-3d-green' : 'bg-rose-500 text-white'
+                                  : 'btn-3d-white'
+                              }`}
+                            >
+                              x = {ans}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Фидбек */}
+                      {quadFeedback === 'correct' && (
+                        <div className="p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-400 text-emerald-800 font-extrabold flex items-center justify-center gap-3">
+                          <span className="text-2xl">🏆</span>
+                          <span>Блестяще! Корни x₁ = 2 и x₂ = 3! (2+3=5, 2·3=6). Экзаменационный уровень сдан! +30 💎!</span>
+                        </div>
+                      )}
+
+                      {quadFeedback === 'wrong' && (
+                        <div className="p-4 rounded-2xl bg-rose-50 border-2 border-rose-300 text-rose-700 font-bold flex items-center justify-center gap-3">
+                          <span className="text-2xl">🤔</span>
+                          <span>Проверь знаки: при подстановке (2)² - 5(2) + 6 = 4 - 10 + 6 = 0! Попробуй еще раз!</span>
                         </div>
                       )}
 
