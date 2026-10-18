@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brandDarkBlue: #1E2C8A;
+  --color-brandYellow: #FFB21F;
+  --color-brandMint: #BDEBCB;
+  --color-duoGreen: #58CC02;
+  --color-duoBlue: #1CB0F6;
+  --color-brandYellowDark: #E09B15;
+  --color-brandDarkBlueShade: #152066;
+}
+
+body {
+  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  background-color: #F8FAFC;
+  margin: 0;
+  padding: 0;
+}
+
+/* Объемные 3D Кнопки */
+.btn-3d {
+  transition: all 0.1s ease-in-out;
+  transform: translateY(0);
+}
+.btn-3d:active {
+  transform: translateY(4px);
+}
+
+.btn-3d-yellow {
+  background-color: #FFB21F;
+  box-shadow: 0 5px 0 #D49010;
+  color: #1E2C8A;
+}
+.btn-3d-yellow:active {
+  box-shadow: 0 1px 0 #D49010;
+}
+
+.btn-3d-green {
+  background-color: #58CC02;
+  box-shadow: 0 5px 0 #46A302;
+  color: #FFFFFF;
+}
+.btn-3d-green:active {
+  box-shadow: 0 1px 0 #46A302;
+}
+
+.btn-3d-blue {
+  background-color: #1E2C8A;
+  box-shadow: 0 5px 0 #121A52;
+  color: #FFFFFF;
+}
+.btn-3d-blue:active {
+  box-shadow: 0 1px 0 #121A52;
+}
+
+.btn-3d-sky {
+  background-color: #1CB0F6;
+  box-shadow: 0 5px 0 #1899D6;
+  color: #FFFFFF;
+}
+.btn-3d-sky:active {
+  box-shadow: 0 1px 0 #1899D6;
+}
+
+.btn-3d-white {
+  background-color: #FFFFFF;
+  box-shadow: 0 5px 0 #E2E8F0;
+  color: #1E2C8A;
+  border: 2px solid #E2E8F0;
+}
+.btn-3d-white:active {
+  box-shadow: 0 1px 0 #CBD5E1;
+}
+
+/* Анимации для кусков пиццы */
+.pizza-slice {
+  cursor: pointer;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
+  transform-origin: 150px 150px;
+}
+.pizza-slice:hover {
+  filter: brightness(1.06);
+}
+.pizza-slice.selected-0 {
+  transform: translate(10px, -10px) scale(1.03);
+}
+.pizza-slice.selected-1 {
+  transform: translate(10px, 10px) scale(1.03);
+}
+.pizza-slice.selected-2 {
+  transform: translate(-10px, 10px) scale(1.03);
+}
+.pizza-slice.selected-3 {
+  transform: translate(-10px, -10px) scale(1.03);
+}
+
+/* Пульсация микрофона */
+@keyframes mic-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  70% { box-shadow: 0 0 0 18px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+.mic-recording {
+  animation: mic-pulse 1.3s infinite;
+}
